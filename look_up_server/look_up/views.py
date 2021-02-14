@@ -5,3 +5,7 @@ from django.http import HttpResponse
 
 def index(request):
     return HttpResponse("Hello, World. You are at the app look_up")
+
+
+def welcome(request):
+    return HttpResponse("Hello..Welcome to the look up app ...")
