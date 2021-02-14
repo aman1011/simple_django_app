@@ -16,21 +16,6 @@ def welcome(request):
     return HttpResponse("Hello..Welcome to the look up app ...")
 
 
-def read_csv_file():
-    module_dir = os.path.dirname(__file__)
-    file_path = os.path.join(module_dir, os.environ.get('FILE_LOCATION', 'newservers.csv'))
-    list_of_dicts = []
-    try:
-        with open(file_path) as phile:
-            data = csv.DictReader(phile, delimiter=',')
-            for row in data:
-                list_of_dicts.append(row)
-
-            return list_of_dicts
-    except (FileNotFoundError, Exception) as error:
-        print(error)
-
-
 def validate_the_response(json_object):
 
     # check validity for the IP address.
@@ -83,8 +68,13 @@ def validate_the_response(json_object):
 
 
 def server(request, server_id):
-    # read the CSV.
-    data = read_csv_file()
+    # read the written data.
+    module_dir = os.path.dirname(__file__)
+    file_path = os.path.join(module_dir, 'data.json')
+    with open(file_path) as phile:
+        content = phile.read()
+        data = json.loads(content)
+
     for row in data:
         if row['serial'] == server_id:
 
