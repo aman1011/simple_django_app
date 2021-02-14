@@ -18,7 +18,7 @@ def welcome(request):
 
 def read_csv_file():
     module_dir = os.path.dirname(__file__)
-    file_path = os.path.join(module_dir, 'newservers.csv')
+    file_path = os.path.join(module_dir, os.environ.get('FILE_LOCATION', 'newservers.csv'))
     list_of_dicts = []
     try:
         with open(file_path) as phile:
@@ -45,7 +45,7 @@ def validate_the_response(json_object):
     # check if the ip and netmask is valid.
     try:
         ip_network = ipaddress.IPv4Network(json_object["ip"] + "/" + json_object["netmask"], strict=False)
-    except ValueError as  value_error:
+    except ValueError as value_error:
         return {
             "is_valid": False,
             "error_message": "Issue in IP addr and Netmask network config:- " + str(value_error),
