@@ -76,15 +76,11 @@ def validate_the_response(json_object):
 
     # After all the validations, lets format the output.
     json_object['hostname'] = json_object['hostname'].strip()
-    json_object['ip'] = json_object['ip']
-    json_object['netmask'] = json_object['netmask']
-    json_object['gateway'] = json_object["gateway"]
-
-    print(json_object)
     return {
         "response": json_object,
         "is_valid": True,
     }
+
 
 def server(request, server_id):
     # read the CSV.
@@ -98,6 +94,7 @@ def server(request, server_id):
             if not validated_data["is_valid"]:
                 return JsonResponse({"error": validated_data["error_message"]})
             else:
+
                 return JsonResponse(validated_data["response"])
 
     return JsonResponse({"response": "No records found"})
